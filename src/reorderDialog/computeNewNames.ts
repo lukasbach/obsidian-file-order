@@ -25,20 +25,6 @@ const obsidianCompareNames = (
   const aName = a instanceof TAbstractFile ? a.name : a;
   const bName = b instanceof TAbstractFile ? b.name : b;
   return aName.localeCompare(bName);
-  /*
-  const specialCharsOrder = ["_", "-", ",", ";", "!", "`", "+", "=", "~"];
-  const startsWithSpecial = (str: string) =>
-    specialCharsOrder.some((c) => str.startsWith(c));
-  if (startsWithSpecial(a) && !startsWithSpecial(b)) {
-    return 1;
-  }
-  if (!startsWithSpecial(a) && startsWithSpecial(b)) {
-    return -1;
-  }
-  if (startsWithSpecial(a) && startsWithSpecial(b)) {
-    return specialCharsOrder.indexOf(b[0]) - specialCharsOrder.indexOf(a[0]);
-  }
-  return a.toLowerCase().localeCompare(b.toLowerCase()); */
 };
 
 export const sortByName = <T extends string | TAbstractFile>(items: T[]) => {

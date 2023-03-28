@@ -1,3 +1,6 @@
+.file-order-dialog {
+}
+
 .file-order-item {
     display: flex;
     align-items: center;
@@ -21,4 +24,22 @@
 
 .file-order-item-name {
     padding: 0 6px;
+}
+
+.file-order-dialog {
+    min-height: 400px;
+}
+
+.file-order-dialog-row {
+    display: flex;
+    margin-bottom: 6px;
+}
+.file-order-dialog-row > * {
+    margin-right: 6px;
+}
+.file-order-dialog-row > :last-child {
+    margin-right: 0;
+}
+.file-order-dialog-row-grow {
+    flex-grow: 1;
 }

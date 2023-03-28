@@ -8,6 +8,7 @@ export class ReorderModal extends Modal {
   constructor(private plugin: FileOrder, private parent?: TFolder) {
     super(plugin.app);
     const root = ReactDOM.createRoot(this.contentEl);
+    this.titleEl.innerHTML = `Reorder Files of ${parent.path}`;
     root.render(<ReorderDialog plugin={plugin} parent={parent} />);
   }
 }

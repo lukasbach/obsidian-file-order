@@ -44,21 +44,47 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({ parent, plugin }) => {
   );
 
   return (
-    <div style={{ height: "700px" }}>
-      <h2>Folders</h2>
-      <DragBox
-        items={currentFolders}
-        originalItems={originalFolders}
-        onChange={setCurrentFolders}
-        newNames={newFolderNames}
-      />
-      <h2>Files</h2>
-      <DragBox
-        items={currentFiles}
-        originalItems={originalFiles}
-        onChange={setCurrentFiles}
-        newNames={newFileNames}
-      />
+    <div className="file-order-dialog">
+      <div className="file-order-dialog-row">
+        <button>Undo Changes</button>
+        <button>Clear custom ordering</button>
+        <div className="file-order-dialog-row-grow" />
+        <button className="mod-cta">Apply changes</button>
+      </div>
+      <div style={{ marginBottom: "8px" }}>
+        Filenames have a minimum of{" "}
+        <input type="number" placeholder="123" style={{ width: "40px" }} />{" "}
+        numbers, seperated from the filename by a{" "}
+        <input type="text" placeholder="xx" style={{ width: "40px" }} />.
+      </div>
+      <div className="file-order-dialog-content">
+        {currentFolders.length > 0 && (
+          <>
+            <h2>Folders</h2>
+            <DragBox
+              items={currentFolders}
+              originalItems={originalFolders}
+              onChange={setCurrentFolders}
+              newNames={newFolderNames}
+            />
+          </>
+        )}
+        {currentFiles.length > 0 && (
+          <>
+            <h2>Files</h2>
+            <DragBox
+              items={currentFiles}
+              originalItems={originalFiles}
+              onChange={setCurrentFiles}
+              newNames={newFileNames}
+            />
+          </>
+        )}
+      </div>
+      <div className="file-order-dialog-row">
+        <div className="file-order-dialog-row-grow" />
+        <button className="mod-cta">Apply changes</button>
+      </div>
     </div>
   );
 };
