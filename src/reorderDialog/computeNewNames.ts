@@ -56,7 +56,7 @@ export const computeNewNames = (opts: {
     return siblingsOriginalOrder;
   }
 
-  const newNames = newOrder.map((item, index) =>
+  return newOrder.map((item, index) =>
     generateItemName(
       item,
       index,
@@ -64,6 +64,4 @@ export const computeNewNames = (opts: {
       Math.max(opts.prefixMinLength, `${newOrder.length}`.length)
     )
   );
-
-  return newNames;
 };

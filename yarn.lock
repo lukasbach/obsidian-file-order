@@ -108,9 +108,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lukasbach/eslint-config-base@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@lukasbach/eslint-config-base@npm:1.0.1"
+"@lukasbach/eslint-config-base@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@lukasbach/eslint-config-base@npm:1.0.2"
   peerDependencies:
     "@typescript-eslint/eslint-plugin": ">=5.57.0"
     "@typescript-eslint/parser": ">=5.57.0"
@@ -125,15 +125,15 @@ __metadata:
     eslint-plugin-react: ">=7.32.2"
     eslint-plugin-react-hooks: ">=4.6.0"
     prettier: ">=2.8.7"
-  checksum: b10ab1b3f24cfa192539a293fbf3389c2d0ea93a70c85859422a2afdc25039858c00a5267fa9ca995dfb8dbaf2e2934674f34f3cb04ef7c05022033df09d2d18
+  checksum: 5d7d22b26d51f3284dbfaae67bb6ddfcf166860d6faa57ce97dded0dd50e7ce87ad1ffcb16e17d979e74e78cf055cb1340ee90ba7df386f1ca1ee295c5b66139
   languageName: node
   linkType: hard
 
-"@lukasbach/eslint-config-deps@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@lukasbach/eslint-config-deps@npm:1.0.1"
+"@lukasbach/eslint-config-deps@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@lukasbach/eslint-config-deps@npm:1.0.2"
   dependencies:
-    "@lukasbach/eslint-config-base": ^1.0.1
+    "@lukasbach/eslint-config-base": ^1.0.2
     "@typescript-eslint/eslint-plugin": ^5.57.0
     "@typescript-eslint/parser": ^5.57.0
     eslint-config-airbnb: ^19.0.4
@@ -148,7 +148,7 @@ __metadata:
     prettier: ^2.8.7
   peerDependencies:
     eslint: ">=8.36.0"
-  checksum: bf6d2906971ed1352bfd92536823c2c3b395dfb1e2eb35a173b594d1ab2cfe45ad21c92eb081ef69c7ea161cfd554f81178af3e8fff5add7690c723ed825dfb1
+  checksum: a4c4e5717ebbf7a3ec01551ef515ddfc88c81260892371a92993bd5ae7aabf9d682d1d897facd944e9a8ac8acf4ac36ebd3eec5a1e7c9c3e56e0a6f75b10eb0c
   languageName: node
   linkType: hard
 
@@ -1755,7 +1755,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "file-order@workspace:."
   dependencies:
-    "@lukasbach/eslint-config-deps": ^1.0.1
+    "@lukasbach/eslint-config-deps": ^1.0.2
     "@types/react": ^18.0.30
     "@types/react-dom": ^18.0.11
     builtin-modules: ^3.3.0

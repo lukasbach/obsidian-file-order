@@ -1,18 +1,15 @@
 import { TAbstractFile, TFolder } from "obsidian";
-import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { FileOrder } from "../fileOrder";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import { DragBox } from "./dragBox";
 import { computeNewNames, sortByName } from "./computeNewNames";
 
 export interface ReorderDialogProps {
-  plugin: FileOrder;
   parent?: TFolder;
   onComplete: (newItems: Array<{ item: TAbstractFile; name: string }>) => void;
 }
 
 export const ReorderDialog: FC<ReorderDialogProps> = ({
   parent,
-  plugin,
   onComplete,
 }) => {
   const originalFolders = useMemo(
@@ -60,13 +57,24 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({
     onComplete(newItems);
   }, [onComplete, currentFolders, currentFiles, newFolderNames, newFileNames]);
 
+  const onUndoClick = useCallback(() => {
+    setCurrentFiles(originalFiles);
+    setCurrentFolders(originalFolders);
+  }, [originalFiles, originalFolders]);
+
+  const clearCustomOrderingClick = useCallback(() => {}, []);
+
   return (
     <div className="file-order-dialog">
       <div className="file-order-dialog-row">
-        <button>Undo Changes</button>
-        <button>Clear custom ordering</button>
+        <button type="button" onClick={onUndoClick}>
+          Undo Changes
+        </button>
+        <button type="button" onClick={clearCustomOrderingClick}>
+          Clear custom ordering
+        </button>
         <div className="file-order-dialog-row-grow" />
-        <button className="mod-cta" onClick={onCompleteClick}>
+        <button type="button" className="mod-cta" onClick={onCompleteClick}>
           Apply changes
         </button>
       </div>
@@ -102,7 +110,7 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({
       </div>
       <div className="file-order-dialog-row">
         <div className="file-order-dialog-row-grow" />
-        <button className="mod-cta" onClick={onCompleteClick}>
+        <button type="button" className="mod-cta" onClick={onCompleteClick}>
           Apply changes
         </button>
       </div>

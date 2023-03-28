@@ -18,12 +18,7 @@ const reorder = <T,>(list: T[], startIndex: number, endIndex: number) => {
   return result;
 };
 
-export const DragBox: FC<DragBoxProps> = ({
-  items,
-  originalItems,
-  onChange,
-  newNames,
-}) => {
+export const DragBox: FC<DragBoxProps> = ({ items, onChange, newNames }) => {
   const dropId = useId();
   return (
     <DragDropContext
@@ -49,9 +44,6 @@ export const DragBox: FC<DragBoxProps> = ({
                     <FileItem
                       file={item}
                       isFolder={item instanceof TFolder}
-                      currentOrder={items}
-                      originalOrder={originalItems}
-                      index={index}
                       newName={newNames[index]}
                     />
                   </div>
