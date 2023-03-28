@@ -120,6 +120,7 @@ export const DragBox: FC<DragBoxProps> = ({
           <input
             id={prefixLenId}
             type="number"
+            min={0}
             placeholder="123"
             style={{ width: "30px" }}
             value={prefixLen}
@@ -129,7 +130,14 @@ export const DragBox: FC<DragBoxProps> = ({
           />
         </div>
 
-        <div className="file-order-field">
+        <div
+          className="file-order-field"
+          title={
+            delim.split("").every((c) => c === " ")
+              ? `${delim.length} space${delim.length > 1 ? "s" : ""}`
+              : ""
+          }
+        >
           <label htmlFor={delemiterId}>Delimiter</label>
           <input
             id={delemiterId}

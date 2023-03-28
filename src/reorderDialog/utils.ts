@@ -82,7 +82,7 @@ export const inferOrderProperties = (items: string[]) => {
   }
   const numberLength = /^(\d+)/.exec(items[0])![1].length;
   const isActualPrefixLength = items.every((item) =>
-    item.match(new RegExp(`^\\d{${numberLength}}`))
+    item.match(new RegExp(`^\\d{${String(items.length).length}}[^\\d]`))
   );
 
   let delimiter = "";
