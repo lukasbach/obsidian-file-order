@@ -95,7 +95,7 @@ export const DragBox: FC<DragBoxProps> = ({
   }, [currentItems, newNames, onChange]);
 
   const prefixLenId = useId();
-  const delemiterId = useId();
+  const delimiterId = useId();
   const startingIndexId = useId();
 
   const onUndoClick = useCallback(() => {
@@ -173,9 +173,9 @@ export const DragBox: FC<DragBoxProps> = ({
               : ""
           }
         >
-          <label htmlFor={delemiterId}>Delimiter</label>
+          <label htmlFor={delimiterId}>Delimiter</label>
           <input
-            id={delemiterId}
+            id={delimiterId}
             type="text"
             placeholder="x"
             style={{ width: "40px" }}
