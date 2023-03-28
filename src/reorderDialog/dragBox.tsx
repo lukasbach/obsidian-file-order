@@ -1,23 +1,10 @@
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { FC, useId, useRef, useState } from "react";
 import { TAbstractFile, TFolder } from "obsidian";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { VscChevronDown, VscChevronUp } from "react-icons/all";
 import { FileItem } from "./fileItem";
-import {
-  computeNewNames,
-  inferOrderProperties,
-  obsidianCompareNames,
-  parseItemName,
-} from "./utils";
 import { FileOrderSettings } from "../common";
+import { useDragBox } from "./useDragBox";
 
 export interface DragBoxProps {
   originalItems: TAbstractFile[];
@@ -34,95 +21,28 @@ const reorder = <T,>(list: T[], startIndex: number, endIndex: number) => {
   return result;
 };
 
-export const DragBox: FC<DragBoxProps> = ({
-  onChange,
-  originalItems,
-  title,
-  defaults,
-}) => {
-  const [currentItems, setCurrentItems] = useState(originalItems);
-  const [originalDelim, setOriginalDelim] = useState(defaults.delimiter);
-  const [originalPrefixLen, setOriginalPrefixLen] = useState(
-    defaults.prefixMinLength
-  );
-  const [originalStartingIndex, setOriginalStartingIndex] = useState(
-    defaults.startingIndex
-  );
-  const [delim, setDelim] = useState(defaults.delimiter);
-  const [prefixLen, setPrefixLen] = useState(defaults.prefixMinLength);
-  const [startingIndex, setStartingIndex] = useState(defaults.startingIndex);
-  const [expanded, setExpanded] = useState(false);
-  const newNames = useMemo(
-    () =>
-      computeNewNames({
-        originalItems: originalItems.map((item) => item.name),
-        newOrder: currentItems.map((item) => item.name),
-        delimiter: delim,
-        prefixMinLength: prefixLen,
-        originalDelimiter: originalDelim,
-        originalPrefixMinLength: originalPrefixLen,
-        startingIndex,
-      }),
-    [
-      currentItems,
-      delim,
-      originalDelim,
-      originalItems,
-      originalPrefixLen,
-      prefixLen,
-      startingIndex,
-    ]
-  );
-
+export const DragBox: FC<DragBoxProps> = (props) => {
+  const { originalItems, title } = props;
+  const {
+    onUndoClick,
+    clearCustomOrderingClick,
+    prefixLen,
+    setPrefixLen,
+    delim,
+    setDelim,
+    startingIndex,
+    setStartingIndex,
+    currentItems,
+    setCurrentItems,
+    newNames,
+  } = useDragBox(props);
   const dropId = useId();
-
-  useEffect(() => {
-    const properties = inferOrderProperties(
-      originalItems.map((item) => item.name)
-    );
-    if (properties) {
-      setDelim(properties.delimiter);
-      setOriginalDelim(properties.delimiter);
-      setPrefixLen(properties.prefixMinLength);
-      setOriginalPrefixLen(properties.prefixMinLength);
-      setStartingIndex(properties.startingIndex);
-      setOriginalStartingIndex(properties.startingIndex);
-    }
-  }, [originalItems]);
-
-  useEffect(() => {
-    const newItems = currentItems
-      .map((item, index) => ({
-        item,
-        name: newNames[index],
-      }))
-      .filter(({ name, item }) => name !== item.name);
-    onChange(newItems);
-  }, [currentItems, newNames, onChange]);
+  const configElementRef = useRef<HTMLDivElement>(null);
 
   const prefixLenId = useId();
   const delimiterId = useId();
   const startingIndexId = useId();
-
-  const onUndoClick = useCallback(() => {
-    setCurrentItems(originalItems);
-    setDelim(originalDelim);
-    setPrefixLen(originalPrefixLen);
-    setStartingIndex(originalStartingIndex);
-  }, [originalDelim, originalItems, originalPrefixLen, originalStartingIndex]);
-
-  const clearCustomOrderingClick = useCallback(() => {
-    setPrefixLen(0);
-    const items = [...currentItems];
-    items.sort((a, b) =>
-      obsidianCompareNames(
-        parseItemName(a.name, delim),
-        parseItemName(b.name, delim)
-      )
-    );
-    setCurrentItems(items);
-  }, [currentItems, delim]);
-  const configElementRef = useRef<HTMLDivElement>(null);
+  const [expanded, setExpanded] = useState(false);
 
   if (originalItems.length === 0) {
     return null;

@@ -7,7 +7,7 @@ Use number-prefixes in your file names to define a custom order, and use drag-an
 To make changes to this plugin, first ensure you have the dependencies installed.
 
 ```
-npm install
+yarn
 ```
 
 ### Development
@@ -15,7 +15,7 @@ npm install
 To start building the plugin with what mode enabled run the following command:
 
 ```
-npm run dev
+yarn dev
 ```
 
 _Note: If you haven't already installed the hot-reload-plugin you'll be prompted to. You need to enable that plugin in your obsidian vault before hot-reloading will start. You might need to refresh your plugin list for it to show up._
@@ -25,7 +25,7 @@ _Note: If you haven't already installed the hot-reload-plugin you'll be prompted
 To start a release build run the following command:
 
 ```
-npm run build
+yarn build
 ```
 
 ---
