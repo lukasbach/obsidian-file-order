@@ -45,11 +45,42 @@
     flex-grow: 1;
 }
 
+.file-order-dialog-h2-container {
+    display: flex;
+    align-items: baseline;
+}
+.file-order-dialog-h2-container > button {
+    margin-left: 8px;
+}
 .file-order-dialog-h2 {
     margin-bottom: 0;
+    flex-grow: 1;
 }
 .file-order-dialog-items-config {
     font-size: var(--font-smaller);
     line-height: var(--line-height-tight);
-    margin-bottom: 16px;
+    margin: 8px 0;
 }
+
+.file-order-field {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.file-order-field > :first-child {
+    display: flex;
+    align-items: center;
+    padding: var(--nav-item-padding);
+    background-color: var(--background-secondary);
+    border: 1px solid var(--divider-color);
+    border-top-left-radius: var(--radius-s);
+    border-bottom-left-radius: var(--radius-s);
+    height: var(--input-height);
+    cursor: pointer;
+}
+.file-order-field > :nth-child(2) {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+

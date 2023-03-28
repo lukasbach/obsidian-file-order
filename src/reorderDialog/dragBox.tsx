@@ -1,4 +1,11 @@
-import React, { FC, useEffect, useId, useMemo, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+} from "react";
 import { TAbstractFile, TFolder } from "obsidian";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FileItem } from "./fileItem";
@@ -54,7 +61,6 @@ export const DragBox: FC<DragBoxProps> = ({
     const properties = inferOrderProperties(
       originalItems.map((item) => item.name)
     );
-    console.log("inferred properties", properties);
     if (properties) {
       setDelim(properties.delimiter);
       setOriginalDelim(properties.delimiter);
@@ -73,36 +79,71 @@ export const DragBox: FC<DragBoxProps> = ({
     onChange(newItems);
   }, [currentItems, newNames, onChange]);
 
+  const prefixLenId = useId();
+  const delemiterId = useId();
+  const startingIndexId = useId();
+
+  const onUndoClick = useCallback(() => {
+    setCurrentItems(originalItems);
+    setDelim(originalDelim);
+    setPrefixLen(originalPrefixLen);
+  }, [originalDelim, originalItems, originalPrefixLen]);
+
+  const clearCustomOrderingClick = useCallback(() => {}, []);
+
   if (originalItems.length === 0) {
     return null;
   }
 
   return (
     <>
-      <h2 className="file-order-dialog-h2">{title}</h2>
+      <div className="file-order-dialog-h2-container">
+        <h2 className="file-order-dialog-h2">{title}</h2>
+        <button type="button" onClick={onUndoClick}>
+          Undo Changes
+        </button>
+        <button type="button" onClick={clearCustomOrderingClick}>
+          Clear custom ordering
+        </button>
+      </div>
       <div className="file-order-dialog-items-config">
-        Items have a minimum of{" "}
-        <input
-          type="number"
-          placeholder="123"
-          style={{ width: "30px" }}
-          value={prefixLen}
-          onChange={(e) => {
-            setPrefixLen(parseInt(e.target.value, 10));
-          }}
-        />{" "}
-        numbers, seperated from the filename by a{" "}
-        <input
-          type="text"
-          placeholder="xx"
-          style={{ width: "40px" }}
-          value={delim}
-          onChange={(e) => {
-            setDelim(e.target.value);
-          }}
-        />
-        {delim === " " ? " (space)" : ""}. Index starts at
-        <input type="number" placeholder="123" style={{ width: "30px" }} />.
+        <div className="file-order-field">
+          <label htmlFor={prefixLenId}>Index Minimum Length</label>
+          <input
+            id={prefixLenId}
+            type="number"
+            placeholder="123"
+            style={{ width: "30px" }}
+            value={prefixLen}
+            onChange={(e) => {
+              setPrefixLen(parseInt(e.target.value, 10));
+            }}
+          />
+        </div>
+
+        <div className="file-order-field">
+          <label htmlFor={delemiterId}>Delimiter</label>
+          <input
+            id={delemiterId}
+            type="text"
+            placeholder="xx"
+            style={{ width: "40px" }}
+            value={delim}
+            onChange={(e) => {
+              setDelim(e.target.value);
+            }}
+          />
+        </div>
+
+        <div className="file-order-field">
+          <label htmlFor={startingIndexId}>Starting Index</label>
+          <input
+            id={startingIndexId}
+            type="number"
+            placeholder="0"
+            style={{ width: "30px" }}
+          />
+        </div>
       </div>
       <DragDropContext
         onDragEnd={(result) => {
