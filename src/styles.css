@@ -65,7 +65,7 @@
 .file-order-field {
     display: inline-flex;
     align-items: center;
-    margin-right: 8px;
+    margin: 4px 8px 4px 0;
 }
 
 .file-order-field > :first-child {
@@ -82,5 +82,14 @@
 .file-order-field > :nth-child(2) {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
+}
+
+.file-order-hidden, .file-order-expanded {
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+.file-order-hidden {
+}
+.file-order-expanded {
 }
 

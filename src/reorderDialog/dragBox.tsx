@@ -4,10 +4,12 @@ import React, {
   useEffect,
   useId,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { TAbstractFile, TFolder } from "obsidian";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { VscChevronDown, VscChevronUp } from "react-icons/all";
 import { FileItem } from "./fileItem";
 import { computeNewNames, inferOrderProperties } from "./utils";
 
@@ -37,6 +39,7 @@ export const DragBox: FC<DragBoxProps> = ({
   const [delim, setDelim] = useState("");
   const [prefixLen, setPrefixLen] = useState(0);
   const [startingIndex, setStartingIndex] = useState(0);
+  const [expanded, setExpanded] = useState(false);
   const newNames = useMemo(
     () =>
       computeNewNames({
@@ -65,7 +68,6 @@ export const DragBox: FC<DragBoxProps> = ({
     const properties = inferOrderProperties(
       originalItems.map((item) => item.name)
     );
-    console.log("inferred properties", properties);
     if (properties) {
       setDelim(properties.delimiter);
       setOriginalDelim(properties.delimiter);
@@ -98,6 +100,7 @@ export const DragBox: FC<DragBoxProps> = ({
   }, [originalDelim, originalItems, originalPrefixLen, originalStartingIndex]);
 
   const clearCustomOrderingClick = useCallback(() => {}, []);
+  const configElementRef = useRef<HTMLDivElement>(null);
 
   if (originalItems.length === 0) {
     return null;
@@ -113,8 +116,24 @@ export const DragBox: FC<DragBoxProps> = ({
         <button type="button" onClick={clearCustomOrderingClick}>
           Clear custom ordering
         </button>
+        <button
+          type="button"
+          onClick={() => setExpanded(!expanded)}
+          title="More options"
+        >
+          {expanded ? <VscChevronUp /> : <VscChevronDown />}
+        </button>
       </div>
-      <div className="file-order-dialog-items-config">
+      <div
+        ref={configElementRef}
+        className={[
+          "file-order-dialog-items-config",
+          expanded ? "file-order-expanded" : "file-order-hidden",
+        ].join(" ")}
+        style={{
+          maxHeight: expanded ? configElementRef.current?.scrollHeight : 0,
+        }}
+      >
         <div className="file-order-field">
           <label htmlFor={prefixLenId}>Index Minimum Length</label>
           <input
