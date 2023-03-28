@@ -11,7 +11,12 @@ import { TAbstractFile, TFolder } from "obsidian";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { VscChevronDown, VscChevronUp } from "react-icons/all";
 import { FileItem } from "./fileItem";
-import { computeNewNames, inferOrderProperties } from "./utils";
+import {
+  computeNewNames,
+  inferOrderProperties,
+  obsidianCompareNames,
+  parseItemName,
+} from "./utils";
 
 export interface DragBoxProps {
   originalItems: TAbstractFile[];
@@ -99,7 +104,17 @@ export const DragBox: FC<DragBoxProps> = ({
     setStartingIndex(originalStartingIndex);
   }, [originalDelim, originalItems, originalPrefixLen, originalStartingIndex]);
 
-  const clearCustomOrderingClick = useCallback(() => {}, []);
+  const clearCustomOrderingClick = useCallback(() => {
+    setPrefixLen(0);
+    const items = [...currentItems];
+    items.sort((a, b) =>
+      obsidianCompareNames(
+        parseItemName(a.name, delim),
+        parseItemName(b.name, delim)
+      )
+    );
+    setCurrentItems(items);
+  }, [currentItems, delim]);
   const configElementRef = useRef<HTMLDivElement>(null);
 
   if (originalItems.length === 0) {

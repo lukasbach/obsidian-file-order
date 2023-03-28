@@ -1,6 +1,6 @@
 import { TAbstractFile } from "obsidian";
 
-const parseItemName = (fileName: string, delimiter: string) => {
+export const parseItemName = (fileName: string, delimiter: string) => {
   if (fileName.match(new RegExp(`^\\d+${delimiter}`))) {
     const [, ...rest] = fileName.split(delimiter);
     return rest.join(delimiter);
@@ -18,7 +18,7 @@ const generateItemName = (
   return `${prefix}${delimiter}${fileName}`;
 };
 
-const obsidianCompareNames = (
+export const obsidianCompareNames = (
   a: string | TAbstractFile,
   b: string | TAbstractFile
 ) => {
