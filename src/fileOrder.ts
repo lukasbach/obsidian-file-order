@@ -2,6 +2,7 @@ import { Notice, Plugin, TFile, TFolder } from "obsidian";
 import { FileOrderSettingTab } from "./fileOrderSettingTab";
 import { DEFAULT_SETTINGS, FileOrderSettings } from "./common";
 import { ReorderModal } from "./reorderModal";
+import { tryToGetFixedName } from "./reorderDialog/utils";
 
 export class FileOrder extends Plugin {
   settings: FileOrderSettings;
@@ -24,6 +25,26 @@ export class FileOrder extends Plugin {
               new ReorderModal(this, parent).open();
             });
         });
+
+        const fixedName = tryToGetFixedName(
+          file.parent?.children.map((i) => i.name),
+          file.name
+        );
+
+        if (fixedName) {
+          menu.addItem((item) => {
+            item
+              .setTitle("Fix name to ordering convention")
+              .setIcon("check")
+              .onClick(async () => {
+                await this.app.fileManager.renameFile(
+                  file,
+                  `${file.parent.path}/${fixedName}`
+                );
+                new Notice(`Fixed name to: "${fixedName}"`);
+              });
+          });
+        }
       })
     );
   }

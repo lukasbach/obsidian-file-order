@@ -1,9 +1,21 @@
 import { TAbstractFile } from "obsidian";
 
-export const parseItemName = (fileName: string, delimiter: string) => {
+const parseItemNamePieces = (fileName: string, delimiter: string) => {
   if (fileName.match(new RegExp(`^\\d+${delimiter}`))) {
-    const numberLength = /^(\d+)/.exec(fileName)![1].length;
-    return fileName.slice(numberLength + delimiter.length);
+    const index = /^(\d+)/.exec(fileName)![1];
+    const numberLength = index.length;
+    return {
+      index: parseInt(index, 10),
+      name: fileName.slice(numberLength + delimiter.length),
+    };
+  }
+  return null;
+};
+
+export const parseItemName = (fileName: string, delimiter: string) => {
+  const parsed = parseItemNamePieces(fileName, delimiter);
+  if (parsed) {
+    return parsed.name;
   }
   return fileName;
 };
@@ -104,4 +116,32 @@ export const inferOrderProperties = (items: string[]) => {
     delimiter,
     startingIndex: lowestIndex,
   };
+};
+
+export const tryToGetFixedName = (
+  items: string[] | undefined,
+  brokenName: string
+) => {
+  if (!items) {
+    return null;
+  }
+
+  const properties = inferOrderProperties(
+    items.filter((i) => i !== brokenName)
+  );
+  if (!properties) {
+    return null;
+  }
+
+  const namePieces = parseItemNamePieces(brokenName, properties.delimiter);
+  if (!namePieces) {
+    return generateItemName(
+      parseItemName(brokenName, properties.delimiter),
+      items.length + properties.startingIndex,
+      properties.delimiter,
+      Math.max(properties.prefixMinLength, `${items.length}`.length)
+    );
+  }
+
+  return null;
 };
