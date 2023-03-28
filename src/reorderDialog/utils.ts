@@ -2,8 +2,8 @@ import { TAbstractFile } from "obsidian";
 
 export const parseItemName = (fileName: string, delimiter: string) => {
   if (fileName.match(new RegExp(`^\\d+${delimiter}`))) {
-    const [, ...rest] = fileName.split(delimiter);
-    return rest.join(delimiter);
+    const numberLength = /^(\d+)/.exec(fileName)![1].length;
+    return fileName.slice(numberLength + delimiter.length);
   }
   return fileName;
 };
