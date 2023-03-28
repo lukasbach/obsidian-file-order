@@ -1,0 +1,37 @@
+{
+  "name": "file-order",
+  "version": "0.0.1",
+  "description": "Use number-prefixes in your file names to define a custom order, and use drag-and-drop in the file explorer to update that order",
+  "main": "lib/main.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "obsidian-plugin build --with-stylesheet src/styles.css src/main.ts",
+    "dev": "obsidian-plugin dev --with-stylesheet src/styles.css src/main.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@lukasbach/eslint-config-deps": "^1.0.0",
+    "eslint": "^8.36.0",
+    "obsidian": "obsidianmd/obsidian-api",
+    "obsidian-plugin-cli": "^0.9.0",
+    "typescript": "^4.1.5"
+  },
+  "eslintConfig": {
+    "extends": "@lukasbach/base",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "ignorePatterns": [
+      "lib",
+      "*.js"
+    ]
+  },
+  "volta": {
+    "node": "18.15.0",
+    "yarn": "3.5.0"
+  },
+  "dependencies": {
+    "builtin-modules": "^3.3.0"
+  }
+}

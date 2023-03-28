@@ -1,0 +1,11 @@
+{
+  "id": "file-order",
+  "name": "File Order",
+  "description": "Use number-prefixes in your file names to define a custom order, and use drag-and-drop in the file explorer to update that order",
+  "author": "Lukas Bach",
+
+  "authorUrl": "https://lukasbach.com",
+
+  "minAppVersion": "0.11.0",
+  "version": "0.0.1"
+}
