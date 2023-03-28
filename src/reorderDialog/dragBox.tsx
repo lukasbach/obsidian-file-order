@@ -17,11 +17,13 @@ import {
   obsidianCompareNames,
   parseItemName,
 } from "./utils";
+import { FileOrderSettings } from "../common";
 
 export interface DragBoxProps {
   originalItems: TAbstractFile[];
   onChange: (newOrder: Array<{ item: TAbstractFile; name: string }>) => void;
   title: string;
+  defaults: FileOrderSettings;
 }
 
 const reorder = <T,>(list: T[], startIndex: number, endIndex: number) => {
@@ -36,14 +38,19 @@ export const DragBox: FC<DragBoxProps> = ({
   onChange,
   originalItems,
   title,
+  defaults,
 }) => {
   const [currentItems, setCurrentItems] = useState(originalItems);
-  const [originalDelim, setOriginalDelim] = useState("");
-  const [originalPrefixLen, setOriginalPrefixLen] = useState(0);
-  const [originalStartingIndex, setOriginalStartingIndex] = useState(0);
-  const [delim, setDelim] = useState("");
-  const [prefixLen, setPrefixLen] = useState(0);
-  const [startingIndex, setStartingIndex] = useState(0);
+  const [originalDelim, setOriginalDelim] = useState(defaults.delimiter);
+  const [originalPrefixLen, setOriginalPrefixLen] = useState(
+    defaults.prefixMinLength
+  );
+  const [originalStartingIndex, setOriginalStartingIndex] = useState(
+    defaults.startingIndex
+  );
+  const [delim, setDelim] = useState(defaults.delimiter);
+  const [prefixLen, setPrefixLen] = useState(defaults.prefixMinLength);
+  const [startingIndex, setStartingIndex] = useState(defaults.startingIndex);
   const [expanded, setExpanded] = useState(false);
   const newNames = useMemo(
     () =>

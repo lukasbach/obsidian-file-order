@@ -1,16 +1,19 @@
 import { TAbstractFile, TFolder } from "obsidian";
 import React, { FC, useCallback, useMemo, useState } from "react";
 import { DragBox } from "./dragBox";
-import { computeNewNames, sortByName } from "./utils";
+import { sortByName } from "./utils";
+import { FileOrderSettings } from "../common";
 
 export interface ReorderDialogProps {
   parent?: TFolder;
   onComplete: (newItems: Array<{ item: TAbstractFile; name: string }>) => void;
+  defaults: FileOrderSettings;
 }
 
 export const ReorderDialog: FC<ReorderDialogProps> = ({
   parent,
   onComplete,
+  defaults,
 }) => {
   const [newFolderOrder, setNewFolderOrder] =
     useState<Array<{ item: TAbstractFile; name: string }>>(null);
@@ -43,11 +46,13 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({
           originalItems={originalFolders}
           onChange={setNewFolderOrder}
           title="Folders"
+          defaults={defaults}
         />
         <DragBox
           originalItems={originalFiles}
           onChange={setNewFileOrder}
           title="Files"
+          defaults={defaults}
         />
       </div>
       <div className="file-order-dialog-row">

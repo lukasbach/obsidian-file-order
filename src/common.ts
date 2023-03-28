@@ -1,6 +1,10 @@
 export interface FileOrderSettings {
-  mySetting: string;
+  delimiter: string;
+  prefixMinLength: number;
+  startingIndex: number;
 }
 export const DEFAULT_SETTINGS: FileOrderSettings = {
-  mySetting: "default",
+  delimiter: " ",
+  prefixMinLength: 0,
+  startingIndex: 0,
 };

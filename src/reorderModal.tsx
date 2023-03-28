@@ -12,7 +12,13 @@ export class ReorderModal extends Modal {
     super(plugin.app);
     const root = ReactDOM.createRoot(this.contentEl);
     this.titleEl.innerHTML = `Reorder Files of ${parent.path}`;
-    root.render(<ReorderDialog parent={parent} onComplete={this.onComplete} />);
+    root.render(
+      <ReorderDialog
+        parent={parent}
+        onComplete={this.onComplete}
+        defaults={plugin.settings}
+      />
+    );
   }
 
   onComplete: ReorderDialogProps["onComplete"] = async (newItems) => {
