@@ -12,7 +12,7 @@
     padding: var(--nav-item-padding);
 }
 
-.file-order-item:hover {
+.file-order-item:hover, .file-order-dragging .file-order-item {
     background-color: var(--nav-item-background-hover);
     color: var(--nav-item-color-hover);
     font-weight: var(--nav-item-weight-hover);
@@ -42,4 +42,13 @@
 }
 .file-order-dialog-row-grow {
     flex-grow: 1;
+}
+
+.file-order-dialog-h2 {
+    margin-bottom: 0;
+}
+.file-order-dialog-items-config {
+    font-size: var(--font-smaller);
+    line-height: var(--line-height-tight);
+    margin-bottom: 16px;
 }

@@ -65,3 +65,22 @@ export const computeNewNames = (opts: {
     )
   );
 };
+
+export const inferOrderProperties = (items: string[]) => {
+  const isOrdered = items.every((item) => item.match(/^\d+/));
+  if (!isOrdered) {
+    return null;
+  }
+  const numberLength = /^(\d+)/.exec(items[0])![1].length;
+  const isActualPrefixLength = items.every((item) =>
+    item.match(new RegExp(`^\\d{${numberLength}}`))
+  );
+  const delimiter = items[0][numberLength];
+
+  const hasDelimiter = items.every((item) => item[numberLength] === delimiter);
+
+  return {
+    prefixMinLength: !isActualPrefixLength ? numberLength : 0,
+    delimiter: hasDelimiter ? delimiter : "",
+  };
+};

@@ -1,7 +1,7 @@
 import { TAbstractFile, TFolder } from "obsidian";
 import React, { FC, useCallback, useMemo, useState } from "react";
 import { DragBox } from "./dragBox";
-import { computeNewNames, sortByName } from "./computeNewNames";
+import { computeNewNames, sortByName } from "./utils";
 
 export interface ReorderDialogProps {
   parent?: TFolder;
@@ -17,15 +17,17 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({
     [parent]
   );
   const [currentFolders, setCurrentFolders] = useState(originalFolders);
+  const [folderDelim, setFolderDelim] = useState("");
+  const [folderPrefixLen, setFolderPrefixLen] = useState(0);
   const newFolderNames = useMemo(
     () =>
       computeNewNames({
         originalItems: originalFolders.map((item) => item.name),
         newOrder: currentFolders.map((item) => item.name),
-        delimiter: " ",
-        prefixMinLength: 0,
+        delimiter: folderDelim,
+        prefixMinLength: folderPrefixLen,
       }),
-    [currentFolders, originalFolders]
+    [currentFolders, folderDelim, folderPrefixLen, originalFolders]
   );
 
   const originalFiles = useMemo(
@@ -34,15 +36,17 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({
     [parent]
   );
   const [currentFiles, setCurrentFiles] = useState(originalFiles);
+  const [fileDelim, setFileDelim] = useState("");
+  const [filePrefixLen, setFilePrefixLen] = useState(0);
   const newFileNames = useMemo(
     () =>
       computeNewNames({
         originalItems: originalFiles.map((item) => item.name),
         newOrder: currentFiles.map((item) => item.name),
-        delimiter: " ",
-        prefixMinLength: 0,
+        delimiter: fileDelim,
+        prefixMinLength: filePrefixLen,
       }),
-    [currentFiles, originalFiles]
+    [currentFiles, fileDelim, filePrefixLen, originalFiles]
   );
 
   const onCompleteClick = useCallback(() => {
@@ -78,32 +82,34 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({
           Apply changes
         </button>
       </div>
-      <div style={{ marginBottom: "8px" }}>
-        Filenames have a minimum of{" "}
-        <input type="number" placeholder="123" style={{ width: "40px" }} />{" "}
-        numbers, seperated from the filename by a{" "}
-        <input type="text" placeholder="xx" style={{ width: "40px" }} />.
-      </div>
       <div className="file-order-dialog-content">
         {currentFolders.length > 0 && (
           <>
-            <h2>Folders</h2>
+            <h2 className="file-order-dialog-h2">Folders</h2>
             <DragBox
               items={currentFolders}
               originalItems={originalFolders}
               onChange={setCurrentFolders}
               newNames={newFolderNames}
+              delim={folderDelim}
+              setDelim={setFolderDelim}
+              prefixMinLength={folderPrefixLen}
+              setPrefixMinLength={setFolderPrefixLen}
             />
           </>
         )}
         {currentFiles.length > 0 && (
           <>
-            <h2>Files</h2>
+            <h2 className="file-order-dialog-h2">Files</h2>
             <DragBox
               items={currentFiles}
               originalItems={originalFiles}
               onChange={setCurrentFiles}
               newNames={newFileNames}
+              delim={fileDelim}
+              setDelim={setFileDelim}
+              prefixMinLength={filePrefixLen}
+              setPrefixMinLength={setFilePrefixLen}
             />
           </>
         )}
