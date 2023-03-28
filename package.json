@@ -32,6 +32,7 @@
       "react/function-component-definition": "off",
       "react/jsx-props-no-spreading": "off",
       "jsx-a11y/label-has-associated-control": "off",
+      "no-plusplus": "off",
       "import/extensions": [
         "error",
         "never"

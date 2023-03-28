@@ -33,8 +33,10 @@ export const DragBox: FC<DragBoxProps> = ({
   const [currentItems, setCurrentItems] = useState(originalItems);
   const [originalDelim, setOriginalDelim] = useState("");
   const [originalPrefixLen, setOriginalPrefixLen] = useState(0);
+  const [originalStartingIndex, setOriginalStartingIndex] = useState(0);
   const [delim, setDelim] = useState("");
   const [prefixLen, setPrefixLen] = useState(0);
+  const [startingIndex, setStartingIndex] = useState(0);
   const newNames = useMemo(
     () =>
       computeNewNames({
@@ -44,6 +46,7 @@ export const DragBox: FC<DragBoxProps> = ({
         prefixMinLength: prefixLen,
         originalDelimiter: originalDelim,
         originalPrefixMinLength: originalPrefixLen,
+        startingIndex,
       }),
     [
       currentItems,
@@ -52,6 +55,7 @@ export const DragBox: FC<DragBoxProps> = ({
       originalItems,
       originalPrefixLen,
       prefixLen,
+      startingIndex,
     ]
   );
 
@@ -61,13 +65,16 @@ export const DragBox: FC<DragBoxProps> = ({
     const properties = inferOrderProperties(
       originalItems.map((item) => item.name)
     );
+    console.log("inferred properties", properties);
     if (properties) {
       setDelim(properties.delimiter);
       setOriginalDelim(properties.delimiter);
       setPrefixLen(properties.prefixMinLength);
       setOriginalPrefixLen(properties.prefixMinLength);
+      setStartingIndex(properties.startingIndex);
+      setOriginalStartingIndex(properties.startingIndex);
     }
-  }, [originalItems, setDelim, setPrefixLen]);
+  }, [originalItems]);
 
   useEffect(() => {
     const newItems = currentItems
@@ -87,7 +94,8 @@ export const DragBox: FC<DragBoxProps> = ({
     setCurrentItems(originalItems);
     setDelim(originalDelim);
     setPrefixLen(originalPrefixLen);
-  }, [originalDelim, originalItems, originalPrefixLen]);
+    setStartingIndex(originalStartingIndex);
+  }, [originalDelim, originalItems, originalPrefixLen, originalStartingIndex]);
 
   const clearCustomOrderingClick = useCallback(() => {}, []);
 
@@ -126,7 +134,7 @@ export const DragBox: FC<DragBoxProps> = ({
           <input
             id={delemiterId}
             type="text"
-            placeholder="xx"
+            placeholder="x"
             style={{ width: "40px" }}
             value={delim}
             onChange={(e) => {
@@ -142,6 +150,10 @@ export const DragBox: FC<DragBoxProps> = ({
             type="number"
             placeholder="0"
             style={{ width: "30px" }}
+            value={startingIndex}
+            onChange={(e) => {
+              setStartingIndex(parseInt(e.target.value, 10));
+            }}
           />
         </div>
       </div>

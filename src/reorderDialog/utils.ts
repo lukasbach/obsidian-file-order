@@ -40,6 +40,7 @@ export const computeNewNames = (opts: {
   delimiter: string;
   originalPrefixMinLength: number;
   originalDelimiter: string;
+  startingIndex: number;
 }) => {
   const siblingsOriginalOrder = sortByName(
     opts.originalItems.map((item) =>
@@ -63,7 +64,7 @@ export const computeNewNames = (opts: {
   return newOrder.map((item, index) =>
     generateItemName(
       item,
-      index,
+      index + opts.startingIndex,
       opts.delimiter,
       Math.max(opts.prefixMinLength, `${newOrder.length}`.length)
     )
@@ -83,12 +84,24 @@ export const inferOrderProperties = (items: string[]) => {
   const isActualPrefixLength = items.every((item) =>
     item.match(new RegExp(`^\\d{${numberLength}}`))
   );
-  const delimiter = items[0][numberLength];
 
-  const hasDelimiter = items.every((item) => item[numberLength] === delimiter);
+  let delimiter = "";
+  for (let i = numberLength; i < items[0].length; i++) {
+    const char = items[0][i];
+    if (items.every((item) => item[i] === char)) {
+      delimiter += char;
+    } else {
+      break;
+    }
+  }
+
+  const lowestIndex = items
+    .map((item) => parseInt(item.slice(0, numberLength), 10))
+    .reduce((acc, item) => Math.min(acc, item), Number.MAX_SAFE_INTEGER);
 
   return {
     prefixMinLength: !isActualPrefixLength ? numberLength : 0,
-    delimiter: hasDelimiter ? delimiter : "",
+    delimiter,
+    startingIndex: lowestIndex,
   };
 };
