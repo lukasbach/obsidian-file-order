@@ -17,7 +17,10 @@ export class ReorderModal extends Modal {
 
   onComplete: ReorderDialogProps["onComplete"] = async (newItems) => {
     for (const { item, name } of newItems) {
-      await this.plugin.app.vault.rename(item, `${item.parent.path}/${name}`);
+      await this.plugin.app.fileManager.renameFile(
+        item,
+        `${item.parent.path}/${name}`
+      );
     }
     this.close();
   };
