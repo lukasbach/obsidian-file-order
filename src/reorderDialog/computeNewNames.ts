@@ -52,9 +52,7 @@ export const computeNewNames = (opts: {
     true
   );
 
-  console.log(siblingsOriginalOrder, newOrder);
   if (opts.prefixMinLength === 0 && areIdentical) {
-    console.log("Lists are identical");
     return siblingsOriginalOrder;
   }
 
@@ -66,8 +64,6 @@ export const computeNewNames = (opts: {
       Math.max(opts.prefixMinLength, `${newOrder.length}`.length)
     )
   );
-
-  console.log("new names are", newNames);
 
   return newNames;
 };

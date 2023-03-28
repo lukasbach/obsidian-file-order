@@ -25,12 +25,9 @@ export const DragBox: FC<DragBoxProps> = ({
   newNames,
 }) => {
   const dropId = useId();
-  // console.log(items, originalItems, newNames);
-  console.log("rerender drag box");
   return (
     <DragDropContext
       onDragEnd={(result) => {
-        console.log("drag end");
         if (!result.destination) {
           return;
         }

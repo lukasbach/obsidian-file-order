@@ -1,15 +1,20 @@
-import { TFolder } from "obsidian";
-import React, { FC, useEffect, useMemo, useState } from "react";
+import { TAbstractFile, TFolder } from "obsidian";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { FileOrder } from "../fileOrder";
 import { DragBox } from "./dragBox";
 import { computeNewNames, sortByName } from "./computeNewNames";
 
-interface ReorderDialogProps {
+export interface ReorderDialogProps {
   plugin: FileOrder;
   parent?: TFolder;
+  onComplete: (newItems: Array<{ item: TAbstractFile; name: string }>) => void;
 }
 
-export const ReorderDialog: FC<ReorderDialogProps> = ({ parent, plugin }) => {
+export const ReorderDialog: FC<ReorderDialogProps> = ({
+  parent,
+  plugin,
+  onComplete,
+}) => {
   const originalFolders = useMemo(
     () => sortByName(parent.children.filter((item) => item instanceof TFolder)),
     [parent]
@@ -43,13 +48,27 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({ parent, plugin }) => {
     [currentFiles, originalFiles]
   );
 
+  const onCompleteClick = useCallback(() => {
+    const allItems = [...currentFolders, ...currentFiles];
+    const newNames = [...newFolderNames, ...newFileNames];
+    const newItems = allItems
+      .map((item, index) => ({
+        item,
+        name: newNames[index],
+      }))
+      .filter(({ name, item }) => name !== item.name);
+    onComplete(newItems);
+  }, [onComplete, currentFolders, currentFiles, newFolderNames, newFileNames]);
+
   return (
     <div className="file-order-dialog">
       <div className="file-order-dialog-row">
         <button>Undo Changes</button>
         <button>Clear custom ordering</button>
         <div className="file-order-dialog-row-grow" />
-        <button className="mod-cta">Apply changes</button>
+        <button className="mod-cta" onClick={onCompleteClick}>
+          Apply changes
+        </button>
       </div>
       <div style={{ marginBottom: "8px" }}>
         Filenames have a minimum of{" "}
@@ -83,7 +102,9 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({ parent, plugin }) => {
       </div>
       <div className="file-order-dialog-row">
         <div className="file-order-dialog-row-grow" />
-        <button className="mod-cta">Apply changes</button>
+        <button className="mod-cta" onClick={onCompleteClick}>
+          Apply changes
+        </button>
       </div>
     </div>
   );
