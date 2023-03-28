@@ -11,7 +11,9 @@
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@lukasbach/eslint-config-deps": "^1.0.0",
+    "@lukasbach/eslint-config-deps": "^1.0.1",
+    "@types/react": "^18.0.30",
+    "@types/react-dom": "^18.0.11",
     "eslint": "^8.36.0",
     "obsidian": "obsidianmd/obsidian-api",
     "obsidian-plugin-cli": "^0.9.0",
@@ -21,6 +23,15 @@
     "extends": "@lukasbach/base",
     "parserOptions": {
       "project": "./tsconfig.json"
+    },
+    "rules": {
+      "no-new": "off",
+      "@typescript-eslint/no-use-before-define": "off",
+      "import/no-cycle": "off",
+      "import/extensions": [
+        "error",
+        "never"
+      ]
     },
     "ignorePatterns": [
       "lib",
@@ -32,6 +43,10 @@
     "yarn": "3.5.0"
   },
   "dependencies": {
-    "builtin-modules": "^3.3.0"
+    "builtin-modules": "^3.3.0",
+    "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0"
   }
 }

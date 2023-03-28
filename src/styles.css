@@ -1,3 +1,24 @@
-/*
-* Add any styles you want to be included w/ your plugin here
-*/
+.file-order-item {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    border-radius: var(--radius-s);
+    font-size: var(--nav-item-size);
+    font-weight: var(--nav-item-weight);
+    line-height: var(--line-height-tight);
+    padding: var(--nav-item-padding);
+}
+
+.file-order-item:hover {
+    background-color: var(--nav-item-background-hover);
+    color: var(--nav-item-color-hover);
+    font-weight: var(--nav-item-weight-hover);
+}
+
+.file-order-item-name {
+    flex-grow: 1;
+}
+
+.file-order-item-name {
+    padding: 0 6px;
+}
