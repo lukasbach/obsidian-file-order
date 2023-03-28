@@ -10,6 +10,7 @@
     font-weight: var(--nav-item-weight);
     line-height: var(--line-height-tight);
     padding: var(--nav-item-padding);
+    white-space: pre;
 }
 
 .file-order-item:hover, .file-order-dragging .file-order-item {

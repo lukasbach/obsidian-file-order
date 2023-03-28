@@ -38,13 +38,17 @@ export const computeNewNames = (opts: {
   newOrder: string[];
   prefixMinLength: number;
   delimiter: string;
+  originalPrefixMinLength: number;
+  originalDelimiter: string;
 }) => {
   const siblingsOriginalOrder = sortByName(
-    opts.originalItems.map((item) => parseItemName(item, opts.delimiter))
+    opts.originalItems.map((item) =>
+      parseItemName(item, opts.originalDelimiter)
+    )
   );
 
   const newOrder = opts.newOrder.map((item) =>
-    parseItemName(item, opts.delimiter)
+    parseItemName(item, opts.originalDelimiter)
   );
 
   const areIdentical = siblingsOriginalOrder.reduce(
@@ -67,6 +71,10 @@ export const computeNewNames = (opts: {
 };
 
 export const inferOrderProperties = (items: string[]) => {
+  if (items.length === 0) {
+    return null;
+  }
+
   const isOrdered = items.every((item) => item.match(/^\d+/));
   if (!isOrdered) {
     return null;

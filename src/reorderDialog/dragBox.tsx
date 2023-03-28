@@ -1,18 +1,13 @@
-import React, { FC, useEffect, useId, useState } from "react";
+import React, { FC, useEffect, useId, useMemo, useState } from "react";
 import { TAbstractFile, TFolder } from "obsidian";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FileItem } from "./fileItem";
-import { inferOrderProperties } from "./utils";
+import { computeNewNames, inferOrderProperties } from "./utils";
 
 export interface DragBoxProps {
-  items: TAbstractFile[];
   originalItems: TAbstractFile[];
-  newNames: string[];
-  onChange: (newOrder: TAbstractFile[]) => void;
-  delim: string;
-  setDelim: (newValue: string) => void;
-  prefixMinLength: number;
-  setPrefixMinLength: (newValue: number) => void;
+  onChange: (newOrder: Array<{ item: TAbstractFile; name: string }>) => void;
+  title: string;
 }
 
 const reorder = <T,>(list: T[], startIndex: number, endIndex: number) => {
@@ -24,38 +19,76 @@ const reorder = <T,>(list: T[], startIndex: number, endIndex: number) => {
 };
 
 export const DragBox: FC<DragBoxProps> = ({
-  items,
   onChange,
-  newNames,
   originalItems,
-  prefixMinLength,
-  setPrefixMinLength,
-  delim,
-  setDelim,
+  title,
 }) => {
+  const [currentItems, setCurrentItems] = useState(originalItems);
+  const [originalDelim, setOriginalDelim] = useState("");
+  const [originalPrefixLen, setOriginalPrefixLen] = useState(0);
+  const [delim, setDelim] = useState("");
+  const [prefixLen, setPrefixLen] = useState(0);
+  const newNames = useMemo(
+    () =>
+      computeNewNames({
+        originalItems: originalItems.map((item) => item.name),
+        newOrder: currentItems.map((item) => item.name),
+        delimiter: delim,
+        prefixMinLength: prefixLen,
+        originalDelimiter: originalDelim,
+        originalPrefixMinLength: originalPrefixLen,
+      }),
+    [
+      currentItems,
+      delim,
+      originalDelim,
+      originalItems,
+      originalPrefixLen,
+      prefixLen,
+    ]
+  );
+
   const dropId = useId();
 
   useEffect(() => {
     const properties = inferOrderProperties(
       originalItems.map((item) => item.name)
     );
+    console.log("inferred properties", properties);
     if (properties) {
       setDelim(properties.delimiter);
-      setPrefixMinLength(properties.prefixMinLength);
+      setOriginalDelim(properties.delimiter);
+      setPrefixLen(properties.prefixMinLength);
+      setOriginalPrefixLen(properties.prefixMinLength);
     }
-  }, [originalItems, setDelim, setPrefixMinLength]);
+  }, [originalItems, setDelim, setPrefixLen]);
+
+  useEffect(() => {
+    const newItems = currentItems
+      .map((item, index) => ({
+        item,
+        name: newNames[index],
+      }))
+      .filter(({ name, item }) => name !== item.name);
+    onChange(newItems);
+  }, [currentItems, newNames, onChange]);
+
+  if (originalItems.length === 0) {
+    return null;
+  }
 
   return (
     <>
+      <h2 className="file-order-dialog-h2">{title}</h2>
       <div className="file-order-dialog-items-config">
         Items have a minimum of{" "}
         <input
           type="number"
           placeholder="123"
           style={{ width: "30px" }}
-          value={prefixMinLength}
+          value={prefixLen}
           onChange={(e) => {
-            setPrefixMinLength(parseInt(e.target.value, 10));
+            setPrefixLen(parseInt(e.target.value, 10));
           }}
         />{" "}
         numbers, seperated from the filename by a{" "}
@@ -68,22 +101,23 @@ export const DragBox: FC<DragBoxProps> = ({
             setDelim(e.target.value);
           }}
         />
-        {delim === " " ? " (space)" : ""}.
+        {delim === " " ? " (space)" : ""}. Index starts at
+        <input type="number" placeholder="123" style={{ width: "30px" }} />.
       </div>
       <DragDropContext
         onDragEnd={(result) => {
           if (!result.destination) {
             return;
           }
-          onChange(
-            reorder(items, result.source.index, result.destination.index)
+          setCurrentItems(
+            reorder(currentItems, result.source.index, result.destination.index)
           );
         }}
       >
         <Droppable droppableId={dropId}>
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              {items.map((item, index) => (
+              {currentItems.map((item, index) => (
                 <Draggable
                   key={item.name}
                   draggableId={item.name}
