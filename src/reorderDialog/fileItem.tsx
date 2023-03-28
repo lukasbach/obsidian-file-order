@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { TAbstractFile } from "obsidian";
-import { VscEdit, VscFile, VscFolder, VscGripper } from "react-icons/all";
+import { VscEdit, VscFile, VscFolder, VscGripper } from "react-icons/vsc";
 
 interface FileItemProps {
   file: TAbstractFile;

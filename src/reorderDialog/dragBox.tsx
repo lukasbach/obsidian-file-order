@@ -1,10 +1,11 @@
-import React, { FC, useId, useRef, useState } from "react";
+import React, { FC, useId, useState } from "react";
 import { TAbstractFile, TFolder } from "obsidian";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { VscChevronDown, VscChevronUp } from "react-icons/all";
+import { VscChevronDown, VscChevronUp } from "react-icons/vsc";
 import { FileItem } from "./fileItem";
 import { FileOrderSettings } from "../common";
 import { useDragBox } from "./useDragBox";
+import { DropBoxConfig } from "./dropBoxConfig";
 
 export interface DragBoxProps {
   originalItems: TAbstractFile[];
@@ -26,23 +27,13 @@ export const DragBox: FC<DragBoxProps> = (props) => {
   const {
     onUndoClick,
     clearCustomOrderingClick,
-    prefixLen,
-    setPrefixLen,
-    delim,
-    setDelim,
-    startingIndex,
-    setStartingIndex,
     currentItems,
     setCurrentItems,
     newNames,
+    ...dropBoxConfigProps
   } = useDragBox(props);
-  const dropId = useId();
-  const configElementRef = useRef<HTMLDivElement>(null);
-
-  const prefixLenId = useId();
-  const delimiterId = useId();
-  const startingIndexId = useId();
   const [expanded, setExpanded] = useState(false);
+  const dropId = useId();
 
   if (originalItems.length === 0) {
     return null;
@@ -66,66 +57,7 @@ export const DragBox: FC<DragBoxProps> = (props) => {
           {expanded ? <VscChevronUp /> : <VscChevronDown />}
         </button>
       </div>
-      <div
-        ref={configElementRef}
-        className={[
-          "file-order-dialog-items-config",
-          expanded ? "file-order-expanded" : "file-order-hidden",
-        ].join(" ")}
-        style={{
-          maxHeight: expanded ? configElementRef.current?.scrollHeight : 0,
-        }}
-      >
-        <div className="file-order-field">
-          <label htmlFor={prefixLenId}>Index Minimum Length</label>
-          <input
-            id={prefixLenId}
-            type="number"
-            min={0}
-            placeholder="123"
-            style={{ width: "30px" }}
-            value={prefixLen}
-            onChange={(e) => {
-              setPrefixLen(parseInt(e.target.value, 10));
-            }}
-          />
-        </div>
-
-        <div
-          className="file-order-field"
-          title={
-            delim.split("").every((c) => c === " ")
-              ? `${delim.length} space${delim.length > 1 ? "s" : ""}`
-              : ""
-          }
-        >
-          <label htmlFor={delimiterId}>Delimiter</label>
-          <input
-            id={delimiterId}
-            type="text"
-            placeholder="x"
-            style={{ width: "40px" }}
-            value={delim}
-            onChange={(e) => {
-              setDelim(e.target.value);
-            }}
-          />
-        </div>
-
-        <div className="file-order-field">
-          <label htmlFor={startingIndexId}>Starting Index</label>
-          <input
-            id={startingIndexId}
-            type="number"
-            placeholder="0"
-            style={{ width: "30px" }}
-            value={startingIndex}
-            onChange={(e) => {
-              setStartingIndex(parseInt(e.target.value, 10));
-            }}
-          />
-        </div>
-      </div>
+      <DropBoxConfig expanded={expanded} {...dropBoxConfigProps} />
       <DragDropContext
         onDragEnd={(result) => {
           if (!result.destination) {
