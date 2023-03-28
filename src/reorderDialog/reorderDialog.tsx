@@ -35,12 +35,6 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({
 
   return (
     <div className="file-order-dialog">
-      <div className="file-order-dialog-row">
-        <div className="file-order-dialog-row-grow" />
-        <button type="button" className="mod-cta" onClick={onCompleteClick}>
-          Apply changes
-        </button>
-      </div>
       <div className="file-order-dialog-content">
         <DragBox
           originalItems={originalFolders}
