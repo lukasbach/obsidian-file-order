@@ -80,7 +80,6 @@ export const DragBox: FC<DragBoxProps> = ({
     const properties = inferOrderProperties(
       originalItems.map((item) => item.name)
     );
-    console.log("properties inferred", properties);
     if (properties) {
       setDelim(properties.delimiter);
       setOriginalDelim(properties.delimiter);
