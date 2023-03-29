@@ -1946,7 +1946,7 @@ __metadata:
     eslint: ^8.36.0
     obsidian: obsidianmd/obsidian-api
     obsidian-plugin-cli: ^0.9.0
-    publish-fast: ^0.0.17
+    publish-fast: ^0.0.18
     react: ^18.2.0
     react-beautiful-dnd: ^13.1.1
     react-dom: ^18.2.0
@@ -3443,9 +3443,9 @@ obsidian@obsidianmd/obsidian-api:
   languageName: node
   linkType: hard
 
-"publish-fast@npm:^0.0.17":
-  version: 0.0.17
-  resolution: "publish-fast@npm:0.0.17"
+"publish-fast@npm:^0.0.18":
+  version: 0.0.18
+  resolution: "publish-fast@npm:0.0.18"
   dependencies:
     "@octokit/rest": ^19.0.7
     colors: ^1.4.0
@@ -3459,7 +3459,7 @@ obsidian@obsidianmd/obsidian-api:
     simple-git: ^3.17.0
   bin:
     publish-fast: lib/cjs/index.js
-  checksum: 2773a9eb79832b7862359576956fb6507189dd75f2c2ce48a1f44ec01446c297d4a232f8623f0cb918c6be387181875506b1f3fd5d6632495eeab0db5834eafa
+  checksum: 3bbb1e4f01ab9c129f2735f2b44e438e4c685b178e54e2b498768cf50119f2282f73904c5b259e4b073741f27fb8779214bf52465e4d32b42fde7b770f27959c
   languageName: node
   linkType: hard
 
