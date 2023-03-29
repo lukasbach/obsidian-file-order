@@ -1,6 +1,3 @@
-.file-order-dialog {
-}
-
 .file-order-item {
     display: flex;
     align-items: center;
@@ -27,10 +24,6 @@
     padding: 0 6px;
 }
 
-.file-order-dialog {
-    min-height: 400px;
-}
-
 .file-order-dialog-row {
     display: flex;
     margin-bottom: 6px;
@@ -48,6 +41,7 @@
 .file-order-dialog-h2-container {
     display: flex;
     align-items: baseline;
+    margin-top: 6px;
 }
 .file-order-dialog-h2-container > button {
     margin-left: 8px;
@@ -55,6 +49,7 @@
 .file-order-dialog-h2 {
     margin-bottom: 0;
     flex-grow: 1;
+    font-size: var(--font-ui-medium);
 }
 .file-order-dialog-items-config {
     font-size: var(--font-smaller);
@@ -88,8 +83,3 @@
     overflow: hidden;
     transition: max-height 0.2s ease-out;
 }
-.file-order-hidden {
-}
-.file-order-expanded {
-}
-
