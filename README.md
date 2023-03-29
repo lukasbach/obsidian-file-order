@@ -56,11 +56,7 @@ _Note: If you haven't already installed the hot-reload-plugin you'll be prompted
 
 ### Releasing
 
-To start a release build run the following command:
-
-```
-yarn build
-```
+Run `yarn release` to release a new version.
 
 ---
 
