@@ -60,6 +60,6 @@
   "publish": {
     "preScripts": "build",
     "skipPublish": true,
-    "releaseAssets": "dist/main.js dist/manifest.json dist/styles.json"
+    "releaseAssets": "dist/*"
   }
 }
