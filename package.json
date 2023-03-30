@@ -58,7 +58,7 @@
     "react-icons": "^4.8.0"
   },
   "publish": {
-    "preScripts": "build",
+    "preScripts": "lint,build",
     "skipPublish": true,
     "releaseAssets": "dist/*"
   }
