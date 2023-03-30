@@ -24,9 +24,9 @@ orderings you have created manually in the past.
 In the plugin settings, you can also define default values for prefix length, delimiter and
 starting index.
 
-![file-order-demo.gif](file-order-demo.gif)
+![obsidian-order-files-demo1.gif](obsidian-order-files-demo1.gif)
 
-![file-order-demo2.gif](file-order-demo2.gif)
+![obsidian-order-files-demo2.gif](obsidian-order-files-demo2.gif)
 
 ## Screenshots
 
