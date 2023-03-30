@@ -77,6 +77,7 @@ export const DragBox: FC<DragBoxProps> = (props) => {
                   draggableId={item.name}
                   index={index}
                 >
+                  {/* eslint-disable-next-line no-shadow */}
                   {(provided, snapshot) => (
                     <div
                       className={
