@@ -1,6 +1,8 @@
 # File Order Obsidian Plugin
 
-Use number-prefixes in your file names to define a custom order, and use drag-and-drop in the file explorer to update that order.
+> Use number-prefixes in your file names to define a custom order, and use drag-and-drop in the file explorer to update that order.
+
+- Find the Plugin "File Order" in the community plugin list in obsidian to install.
 
 To use, after installation you can right-click on any folder or item and click
 on "Reorder items" to open the reorder dialog. There, you can drag and drop items
