@@ -9,7 +9,7 @@
     "dev": "obsidian-plugin dev --with-stylesheet src/styles.css src/main.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "postversion": "node version-bump.mjs",
+    "postversion": "node version-bump.mjs && yarn build",
     "release": "publish-fast"
   },
   "devDependencies": {
