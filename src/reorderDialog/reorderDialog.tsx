@@ -19,13 +19,16 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({
     useState<Array<{ item: TAbstractFile; name: string }>>(null);
   const [newFileOrder, setNewFileOrder] =
     useState<Array<{ item: TAbstractFile; name: string }>>(null);
+  const shouldInclude = (item: TAbstractFile) => {
+    return defaults.ignorePattern === "" || !item.name.match(defaults.ignorePattern);
+  }
   const originalFolders = useMemo(
-    () => sortByName(parent.children.filter((item) => item instanceof TFolder)),
+    () => sortByName(parent.children.filter((item) => item instanceof TFolder && shouldInclude(item))),
     [parent]
   );
   const originalFiles = useMemo(
     () =>
-      sortByName(parent.children.filter((item) => !(item instanceof TFolder))),
+      sortByName(parent.children.filter((item) => !(item instanceof TFolder) && shouldInclude(item))),
     [parent]
   );
 

@@ -90,6 +90,20 @@ export class FileOrderSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings();
           })
       );
+
+    new Setting(containerEl)
+      .setName("Ignore Pattern")
+      .setDesc(
+        "RegEx of files and folder to ignore. Eg: ^index\\.md$ to ignore index.md files"
+      )
+      .addText((text) => {
+        text
+          .setValue(this.plugin.settings.ignorePattern)
+          .onChange(async (value) => {
+            this.plugin.settings.ignorePattern = value;
+            await this.plugin.saveSettings();
+          });
+      });
   }
 
   getDelLabel() {
