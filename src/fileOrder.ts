@@ -47,6 +47,14 @@ export class FileOrder extends Plugin {
         }
       })
     );
+
+    this.addCommand({
+      id: "file-order-reorder-top-folder",
+      name: "Reorder items in top folder",
+      callback: () => {
+        new ReorderModal(this, this.app.vault.getRoot()).open();
+      },
+    });
   }
 
   async loadSettings() {
