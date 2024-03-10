@@ -21,12 +21,16 @@ export const ReorderDialog: FC<ReorderDialogProps> = ({
     useState<Array<{ item: TAbstractFile; name: string }>>(null);
   const shouldInclude = useCallback(
     (item: TAbstractFile) => {
+      if (defaults.ignoreFolderFile && item.name === `${item.parent.name}.md`) {
+        return false;
+      }
+
       return (
         defaults.ignorePattern === "" ||
         !item.name.match(defaults.ignorePattern)
       );
     },
-    [defaults.ignorePattern]
+    [defaults.ignoreFolderFile, defaults.ignorePattern]
   );
   const originalFolders = useMemo(
     () =>

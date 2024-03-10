@@ -104,6 +104,18 @@ export class FileOrderSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings();
           });
       });
+
+    new Setting(containerEl)
+      .setName("Ignore folder file")
+      .setDesc("In a folder named MyFolderName, ignore MyFolderName.md")
+      .addToggle((toggle) => {
+        toggle
+          .setValue(this.plugin.settings.ignoreFolderFile)
+          .onChange(async (value) => {
+            this.plugin.settings.ignoreFolderFile = value;
+            await this.plugin.saveSettings();
+          });
+      });
   }
 
   getDelLabel() {
