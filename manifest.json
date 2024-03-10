@@ -4,6 +4,7 @@
 	"description": "Use number-prefixes in your file names to define a custom order, and drag-and-drop the files to update that order",
 	"author": "Lukas Bach",
 	"authorUrl": "https://lukasbach.com",
+	"fundingUrl": "https://github.com/sponsors/lukasbach",
 	"minAppVersion": "0.15.0",
 	"version": "0.0.8"
 }
