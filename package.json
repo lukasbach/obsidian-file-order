@@ -1,6 +1,6 @@
 {
   "name": "file-order",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Use number-prefixes in your file names to define a custom order, and use drag-and-drop in the file explorer to update that order",
   "main": "lib/main.js",
   "license": "MIT",

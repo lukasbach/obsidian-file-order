@@ -6,6 +6,6 @@
 	"authorUrl": "https://lukasbach.com",
 	"fundingUrl": "https://github.com/sponsors/lukasbach",
 	"minAppVersion": "0.15.0",
-	"version": "0.0.12",
+	"version": "0.0.13",
 	"isDesktopOnly": false
 }
