@@ -36,7 +36,9 @@ export const obsidianCompareNames = (
 ) => {
   const aName = a instanceof TAbstractFile ? a.name : a;
   const bName = b instanceof TAbstractFile ? b.name : b;
-  return aName.localeCompare(bName);
+  //return aName.localeCompare(bName);
+  var collator = new Intl.Collator([], {numeric: true});
+  return collator.compare(aName, bName);
 };
 
 export const sortByName = <T extends string | TAbstractFile>(items: T[]) => {
