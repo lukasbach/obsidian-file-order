@@ -36,7 +36,7 @@ export const obsidianCompareNames = (
 ) => {
   const aName = a instanceof TAbstractFile ? a.name : a;
   const bName = b instanceof TAbstractFile ? b.name : b;
-  var collator = new Intl.Collator([], {numeric: true});
+  const collator = new Intl.Collator([], { numeric: true });
   return collator.compare(aName, bName);
 };
 
